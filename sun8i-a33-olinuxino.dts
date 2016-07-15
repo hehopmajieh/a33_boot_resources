@@ -1,6 +1,7 @@
 /*
  * Copyright 2016 - Stefan Mavrodiev <stefan.mavrodiev@gmail.com>
  *                  Olimex LTD. <support@olimex.com>
+ *		    Dimitar Gamishev <hehopmajieh@debian.bg>
  *
  * This file is dual-licensed: you can use it either under the terms
  * of the GPL or the X11 license, at your option. Note that this dual
@@ -205,3 +206,23 @@
 	status = "okay";
 
 };
+
+&i2c0 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&i2c0_pins_a>;
+        status = "okay";
+
+        ft5x: touchscreen@38 {
+                compatible = "edt,edt-ft5406";
+                reg = <0x38>;
+                interrupt-parent = <&pio>;
+                interrupts = <1 5 IRQ_TYPE_EDGE_FALLING>; /* PB05  */
+                pinctrl-names = "default";
+                pinctrl-0 = <&touchscreen_wake_pin>;
+                wake-gpios = <&pio 1 6 GPIO_ACTIVE_HIGH>; /* PB06 */
+                touchscreen-size-x = <800>;
+                touchscreen-size-y = <480>;
+                touchscreen-swapped-x-y;
+        };
+};
+
